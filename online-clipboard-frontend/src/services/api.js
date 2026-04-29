@@ -6,12 +6,9 @@ export const wakeUpServer = async () => {
   try {
     const response = await fetch(`${API_URL}/health-check`); 
     if (response.ok) {
-        console.log("Server poked to wake up!");
         return true;
     }
-  } catch (err) {
-    console.log("Server might be sleeping or error:", err);
-   
+  } catch (err) {   
     throw err; 
   }
 };

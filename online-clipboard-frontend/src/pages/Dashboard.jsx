@@ -21,17 +21,14 @@ export default function Dashboard({ user }) {
   useEffect(() => {
     if (user?.username) {
       setLoading(true);
-      // Pass page and pageSize to API
       getUserClips(user.username, page, pageSize)
         .then((data) => {
-          // Note: Backend might return oldest first. 
-          // If you want consistent sorting on the current page:
           setClips(data.sort((a, b) => b.id - a.id));
         })
         .catch(() => toast.error("Failed to load clips"))
         .finally(() => setLoading(false));
     }
-  }, [user, page]); // Re-run when page changes
+  }, [user, page]);
 
   const copyToClipboard = (text) => {
     navigator.clipboard.writeText(text);
@@ -59,7 +56,6 @@ const downloadFile = async (content, code = "file") => {
       const response = await fetch(url);
       const blob = await response.blob();
 
-      // Fallback for older files uploaded before this fix
       if (!ext) {
           const mimeType = blob.type.toLowerCase();
           if (mimeType.includes("zip") || mimeType.includes("compressed")) ext = ".zip";
@@ -73,7 +69,7 @@ const downloadFile = async (content, code = "file") => {
       const a = document.createElement("a");
       a.style.display = "none";
       a.href = blobUrl;
-      a.download = `clip-${code}${ext}`; // Creates "clip-12345.pdf"
+      a.download = `clip-${code}${ext}`;
       
       document.body.appendChild(a);
       a.click();
@@ -96,8 +92,6 @@ const downloadFile = async (content, code = "file") => {
     try {
       await deleteClip(id);
       toast.success("Clip deleted");
-      // Optional: Refresh page to fill the gap
-      // getUserClips(user.username, page, pageSize).then(setClips);
     } catch (err) {
       setClips(previousClips);
       toast.error("Failed to delete");
