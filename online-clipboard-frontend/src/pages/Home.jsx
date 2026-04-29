@@ -77,7 +77,6 @@ export default function Home({ user }) {
         const content = event.target.result;
         setLoading(true);
         try {
-          // CHANGE THIS LINE: Pass 'visible' as the 3rd argument
           const data = await createClip(content, user?.username, visible , file.name);
           setGeneratedCode(data.code);
           toast.success(`File "${file.name}" uploaded!`);
@@ -118,7 +117,6 @@ export default function Home({ user }) {
       reader.onload = async (event) => {
         try {
           const base64String = event.target.result;
-          // CHANGE THIS LINE: Pass 'visible' as the 3rd argument
           const data = await createClip(base64String, user?.username, visible , "Archive.zip");
           setGeneratedCode(data.code);
           toast.success(`${files.length} files zipped & uploaded!`);
@@ -187,7 +185,6 @@ const downloadFile = async (content, code = "file") => {
       const blob = await response.blob();
       a.download = customFileName || `clip-${code}${ext}`;
 
-      // Fallback for older files uploaded before this fix
       if (!ext) {
           const mimeType = blob.type.toLowerCase();
           if (mimeType.includes("zip") || mimeType.includes("compressed")) ext = ".zip";
@@ -201,7 +198,7 @@ const downloadFile = async (content, code = "file") => {
       const a = document.createElement("a");
       a.style.display = "none";
       a.href = blobUrl;
-      a.download = `clip-${code}${ext}`; // Creates "clip-12345.pdf"
+      a.download = `clip-${code}${ext}`;
       
       document.body.appendChild(a);
       a.click();
