@@ -5,7 +5,7 @@ import { Server, Power, Activity, Terminal, CheckCircle2, X } from "lucide-react
 export default function ServerWakingUp({ isReady }) {
   const [progress, setProgress] = useState(0);
   const [currentLog, setCurrentLog] = useState("Ping received...");
-  const [showWidget, setShowWidget] = useState(true);
+  const [showWidget, setShowWidget] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
 
   const logs = [
@@ -18,13 +18,34 @@ export default function ServerWakingUp({ isReady }) {
     "System Online."
   ];
 
+  // Visibility Logic
+  useEffect(() => {
+    if (isReady) {
+      if (showWidget) {
+        const timer = setTimeout(() => {
+          setShowWidget(false);
+        }, 5000);
+        return () => clearTimeout(timer);
+      }
+      return;
+    }
+
+    if (!showWidget) {
+      const timer = setTimeout(() => {
+        setShowWidget(true);
+      }, 2500);
+      return () => clearTimeout(timer);
+    }
+  }, [isReady, showWidget]);
+
   // Progress Animation Logic
   useEffect(() => {
     if (isReady) {
       setProgress(100);
-      setTimeout(() => setShowWidget(false), 5000); 
       return;
     }
+
+    setProgress(0);
 
     const totalTime = 45000; 
     const intervalTime = 500;
@@ -38,7 +59,6 @@ export default function ServerWakingUp({ isReady }) {
       
       const logIndex = Math.floor((newProgress / 100) * (logs.length - 1));
       setCurrentLog(logs[logIndex] || "Initializing...");
-
     }, intervalTime);
 
     return () => clearInterval(timer);
