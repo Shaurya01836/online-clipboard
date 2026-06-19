@@ -20,7 +20,8 @@ public class ClipCleanupScheduler {
     private final ClipRepository clipRepository;
     private final Cloudinary cloudinary;
 
-    @Scheduled(fixedRate = 3600000)
+    //12 hours
+    @Scheduled(fixedRate = 43200000)
     @Transactional
     @CacheEvict(value = {"clips", "publicClips", "publicUserClips"}, allEntries = true)
     public void deleteExpiredClips() {
