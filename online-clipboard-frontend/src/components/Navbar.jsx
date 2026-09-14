@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { Terminal, LogOut, UserCircle, Globe } from "lucide-react";
+import { Terminal, LogOut, UserCircle, Globe, BookOpen } from "lucide-react";
 import { useAuth, useClerk } from '@clerk/clerk-react';
 
 export default function Navbar({ user, setUser }) {
@@ -34,6 +34,14 @@ export default function Navbar({ user, setUser }) {
 
         {/* Actions Section */}
         <div className="flex items-center gap-4 md:gap-6">
+          <Link
+            to="/about"
+            className="flex items-center gap-2 text-sm font-medium text-gray-400 hover:text-white transition-colors"
+          >
+            <BookOpen className="w-4 h-4 text-purple-400" />
+            <span className="hidden sm:inline">Our Story</span>
+          </Link>
+
           <Link
             to="/community"
             className="flex items-center gap-2 text-sm font-medium text-gray-400 hover:text-white transition-colors"

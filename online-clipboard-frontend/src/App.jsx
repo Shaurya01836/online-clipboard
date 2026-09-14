@@ -8,6 +8,7 @@ import { Toaster } from "sonner";
 import { clerkUpsert, setAuthToken, wakeUpServer } from "./services/api";
 import "./services/OfflineSync"; // Initialize offline listeners
 import Community from "./pages/Community";
+import About from "./pages/About";
 import ServerWakingUp from "./components/ServerWakingUp"; 
 import { useAuth, useUser } from "@clerk/clerk-react";
 
@@ -112,6 +113,7 @@ function App() {
             }
           />
           <Route path="/community" element={<Community />} />
+          <Route path="/about" element={<About />} />
           <Route path="/profile" element={<Navigate to="/dashboard" replace />} />
         </Routes>
       </div>
