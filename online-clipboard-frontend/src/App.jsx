@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Auth from "./pages/Auth";
@@ -11,6 +11,16 @@ import Community from "./pages/Community";
 import About from "./pages/About";
 import ServerWakingUp from "./components/ServerWakingUp"; 
 import { useAuth, useUser } from "@clerk/clerk-react";
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
 
 function App() {
   const [user, setUser] = useState(() => {
@@ -92,6 +102,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Toaster theme="dark" position="bottom-right" />
 
       <div className="min-h-screen bg-black text-gray-200 font-sans selection:bg-purple-500 selection:text-white">

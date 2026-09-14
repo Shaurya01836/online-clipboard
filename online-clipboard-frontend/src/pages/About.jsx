@@ -1,7 +1,11 @@
+import { useEffect } from "react";
 import { Terminal, Cpu, ShieldAlert, Sparkles, BookOpen, User, ExternalLink, Globe, Github, Linkedin, Twitter, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function About() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const socialLinks = [
     {
       name: "Portfolio",
